@@ -2,10 +2,6 @@ const multer = require("multer");
 const path = require("path");
 
 let fullname = "jay pandya";
-fullname = fullname
-           .trim()
-           .toLowerCase()
-           .replace(/\s+/g, "_");
 
 const storage = multer.diskStorage({
     destination: (req,file,cb) => {
@@ -13,6 +9,13 @@ const storage = multer.diskStorage({
     },
     filename: (req,file,cb) => {
         let profile = String(req.body.profile);
+        let fullname = String(req.body.fullname);
+    
+        fullname = fullname
+                   .trim()
+                   .toLowerCase()
+                   .replace(/\s+/g, "_");
+
         profile = profile
                   .trim()
                   .toLowerCase()

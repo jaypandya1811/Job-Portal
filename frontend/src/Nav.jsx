@@ -23,9 +23,6 @@ export default function Nav() {
 
   return (
     <>
-    <head>
-      <title>Job Portal</title>
-    </head>
     <nav className="bg-white border-purple-400 md:border-b-2 px-6 py-4">
     <div className="md:max-w-7xl md:mx-auto md:flex md:items-center items-center justify-between">
     

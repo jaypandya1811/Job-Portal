@@ -240,7 +240,6 @@ export default function Jobform(){
         </button>
         </div>
       </form>
-
           </div>
         </>
     );

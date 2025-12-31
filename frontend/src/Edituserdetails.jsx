@@ -36,7 +36,7 @@ export default function Edituserdetails(){
     });
 
     const updatedetails = (data) => {
-      console.log(data);
+
       const formdata = new FormData();
 
       Object.keys(data).forEach((key) => {
@@ -60,7 +60,7 @@ export default function Edituserdetails(){
     <>
       <div className="max-w-4xl mx-auto p-6 md:p-10 bg-white shadow-2xl rounded-2xl border border-gray-100 my-10">
       <form className="space-y-6" onSubmit={handleSubmit(updatedetails)}>
-  {/* Full Name */}
+  
   <div>
     <label className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
     <input
@@ -72,7 +72,7 @@ export default function Edituserdetails(){
     {errors.fullname && <span className="text-red-600 font-semibold py-2">Fullname is required</span>}
   </div>
 
-  {/* Email */}
+  
   <div>
     <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
     <input
@@ -90,7 +90,6 @@ export default function Edituserdetails(){
     {errors.email && <span className="text-red-600 font-semibold py-2">{errors.email.message}</span>}
   </div>
 
-  {/* Phone Number - FIXED TAGS HERE */}
   <div>
     <label className="block text-sm font-medium text-gray-700 mb-1.5">Phone Number</label>
     <input
@@ -106,9 +105,8 @@ export default function Edituserdetails(){
       className="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none"
     />
     {errors.phone && <p className="text-red-600 font-semibold">{errors.phone.message}</p>} {/* Added </p> */}
-  </div> {/* Added </div> */}
+  </div>
 
-  {/* Job Profile */}
   <div>
     <label className="block text-sm font-medium text-gray-700 mb-1.5">
       Job Profile <span className="text-red-500">*</span>
@@ -128,13 +126,11 @@ export default function Edituserdetails(){
     {errors.profile && <span className="text-red-600 font-semibold py-2">Profile is required</span>}
   </div>
 
-  {/* Current Resume */}
   <div>
     <label className="block text-sm font-medium text-gray-700 mb-1.5">Current Resume</label>
     <span className="text-blue-800 cursor-pointer"><a href={`http://localhost:3000/resumes/` + userdetails?.resume} target="_blank">Resume</a></span>
   </div>
 
-  {/* Upload New Resume */}
   <div>
     <label className="block text-sm font-medium text-gray-700 mb-1.5">
       Resume <span className="text-red-500">*</span>
@@ -155,7 +151,6 @@ export default function Edituserdetails(){
     {errors.resume && <span className="text-red-600 font-semibold py-2">{errors.resume.message}</span>}
   </div>
 
-  {/* Buttons */}
   <div className="md:col-span-2 flex justify-end space-x-4 pt-6">
     <button type="button" className="px-6 py-2.5 text-md font-semibold text-gray-600 hover:text-gray-800 transition-colors cursor-pointer" onClick={() => navigate(-1)}>
       Cancel

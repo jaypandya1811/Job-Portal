@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaTrash } from "react-icons/fa";
 import { FaBookmark,FaEye } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";

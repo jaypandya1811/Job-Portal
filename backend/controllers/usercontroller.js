@@ -1,6 +1,5 @@
 const model = require('../db/usersdb');
 const bcrypt = require('bcrypt');
-const { json } = require('express');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -20,7 +19,7 @@ exports.registeruser = async (req,res) => {
         if (err.code === 11000){
             return res.status(400).json({
             message: "User with this phone number is already exists"
-        });
+            });
         }
         return res.status(500).json({ error : err.message })
     }
@@ -29,14 +28,17 @@ exports.registeruser = async (req,res) => {
 exports.login = async(req,res) => {
     const { email,password } = req.body;
     try {
+
         const user = await model.findOne({email});
         if(!user){
             return res.status(406).json({ message : "User not found with this email" })
         }
+
         const passmatch = await bcrypt.compare(password,user.password);
         if(!passmatch){
             return res.status(406).json({ message : "Invalid password" })
         }
+
         const token = jwt.sign(
             { userid:user._id, role:user.role, email:user.email },
             process.env.JWT_SECRET,

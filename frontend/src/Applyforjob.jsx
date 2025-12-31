@@ -1,5 +1,4 @@
 import { useState,useEffect } from "react";
-import { FaEnvelope } from "react-icons/fa";
 import { FaPen } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,7 +9,7 @@ import { toast } from "react-toastify";
 export default function Applyforjob(){
   const [job,setjob] = useState();
   const [userdetails,setuserdetails] = useState();
-  const { user, setuser, fetchuser } = useauth();
+  const { user } = useauth();
 
   const { id } = useParams();
 
@@ -48,7 +47,6 @@ export default function Applyforjob(){
       if(user){
       axios.post(`http://localhost:3000/application/apply`,details)
       .then((res) => {
-        console.log(res);
           toast.success("Application sent");
           navigate(`/applications/${user?.user?.userid}`);
       })

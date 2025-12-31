@@ -4,7 +4,6 @@ import { IoDocument } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { useauth } from "./context/authcontext";
-import { Link } from "react-router-dom"
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -24,10 +23,8 @@ export default function Applications(){
 
       useEffect(() => {
         if (!id) return;
-        console.log(userrole);
         if(userrole){
           if(userrole !== "a"){
-          console.log("pupu");
         axios.get(`http://localhost:3000/application/recruiter/${id}`)
         .then((res) => {
         setapplications(res.data);
@@ -36,20 +33,16 @@ export default function Applications(){
           toast.error(err.response.data.message);
         });
         }else{
-           axios.get(`http://localhost:3000/application/applicant/${id}`)
+          axios.get(`http://localhost:3000/application/applicant/${id}`)
           .then((res) => {
           setapplications(res.data);
-          console.log(applications);
           })
           .catch(err => console.log(err));
         }
         }
         },[id,userrole]);
 
-        console.log(applications);
-
       const deleteapplication = (appid) => {
-        console.log("front appid" + appid);
         axios.delete(`http://localhost:3000/application/deleteapplication/${appid}`)
         .then((res) => {
           setapplications(data => data.filter(app => app._id !== appid));
