@@ -1,4 +1,3 @@
-import './App.css'
 import Nav from './nav'
 import Home from './Home'
 import Jobform from './Jobform'

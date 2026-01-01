@@ -1,8 +1,6 @@
 const multer = require("multer");
 const path = require("path");
 
-let fullname = "jay pandya";
-
 const storage = multer.diskStorage({
     destination: (req,file,cb) => {
         cb(null, path.resolve(process.cwd(),  "..","resumes"));

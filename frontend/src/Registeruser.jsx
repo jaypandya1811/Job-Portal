@@ -97,7 +97,7 @@ export default function Registeruser(){
          {...register("phone",{required : "Phone number is required",
           pattern: {
           value: /^[0-9]{10}$/,
-          message: "Phone number must be 10 digits"
+          message: "Enter a valid 10 digits phone number"
          }
          })}
          className="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none" />
@@ -167,9 +167,7 @@ export default function Registeruser(){
 )} 
     </div>
     )}
-    </div>
-      <div className="grid grid-cols-1 gap-6">
-      <div>
+    <div>
         <label className="block text-sm font-medium text-gray-700 mb-1.5">Password <span className="text-red-500">*</span></label>
         <input type="password"
          {...register("password",{required : true})}
@@ -178,7 +176,6 @@ export default function Registeruser(){
          {errors.password && <span className="text-red-600 font-semibold py-2">Password is required</span>}        
       </div>
     </div>
-
     <div className="flex justify-between pt-6 mt-4">
       <button type="button" className="py-2.5 text-sm md:text-lg font-semibold text-gray-700 hover:text-gray-900 transition-colors">Already have an account?<Link to={"/login"} className="text-blue-800 cursor-pointer"> Login</Link></button>
       <button type="submit" className="px-6 py-3 space-x-2 md:px-10 md:py-3 md:text-lg bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 hover:shadow-lg">
