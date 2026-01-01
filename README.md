@@ -7,6 +7,7 @@ It allows users to register, upload resumes, browse jobs, and apply for relevant
 
     - User authentication using JWT
     - User registration & login
+    - Encrypted password
     - Resume upload using Multer
     - View available jobs
     - Apply for jobs
