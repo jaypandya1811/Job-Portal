@@ -49,6 +49,7 @@ It allows users to register, upload resumes, browse jobs, and apply for relevant
 
 Jay Pandya
 Full-stack Developer
-pandyajay005@gmail.com
+
+Email = pandyajay005@gmail.com
 
 Linkdin = https://www.linkedin.com/in/jay-pandya-558757251?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app
