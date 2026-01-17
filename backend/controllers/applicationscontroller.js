@@ -17,9 +17,7 @@ exports.addapplication = async (req, res) => {
 
 exports.deleteapplication = async (req, res) => {
   try {
-    console.log(req.params.id);
-    const q = await model.findByIdAndDelete(req.params.id);
-    console.log(q);
+    await model.findByIdAndDelete(req.params.id);
     return res.status(200).json({ message: "successfully deleted" });
   } catch (err) {
     return res.status(500).json({ message: err.message });

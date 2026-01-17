@@ -26,6 +26,15 @@ exports.savejob = async (req,res) => {
     }
 };
 
+exports.unsavejob = async (req,res) => {
+    try {
+        await savedjobsmodel.deleteOne({ j_id: req.params.id });
+        return res.status(204).json({"message" : "job unsaved"})
+    } catch (err) {
+        return res.status(500).json({ error : err.message })
+    }
+};
+
 exports.viewsavedjobs = async (req,res) => {
     try{
         const id = req.params.id;

@@ -18,4 +18,6 @@ router.get('/search', jobcontroller.searchjob);
 
 router.delete('/deletejob/:id', jobcontroller.deletejob);
 
+router.delete('/unsavejob/:id', jobcontroller.unsavejob);
+
 module.exports = router;

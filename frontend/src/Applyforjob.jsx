@@ -54,7 +54,7 @@ export default function Applyforjob(){
         toast.info(e.response.data.message);
       })
     }else{
-      toast.warning("Login first");
+      toast.info("Login first");
       navigate("/login");
     }
     };
