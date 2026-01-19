@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useauth } from "./context/authcontext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Nav() {

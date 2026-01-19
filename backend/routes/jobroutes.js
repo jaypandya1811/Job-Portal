@@ -16,6 +16,8 @@ router.get('/mypostedjobs/:id', jobcontroller.viewjobrecruiter);
 
 router.get('/search', jobcontroller.searchjob);
 
+router.post('/filter', jobcontroller.filterjobs);
+
 router.delete('/deletejob/:id', jobcontroller.deletejob);
 
 router.delete('/unsavejob/:id', jobcontroller.unsavejob);

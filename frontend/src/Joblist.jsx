@@ -1,15 +1,27 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { FaBookmark, FaEye } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useauth } from "./context/authcontext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { IoIosArrowDown } from "react-icons/io";
+import { Menu, Transition } from "@headlessui/react";
+import { FaPlus } from "react-icons/fa";
 
 export default function Joblist() {
   const [jobs, setjobs] = useState([]);
   const [query, setquery] = useState();
+  const [refresh, setrefresh] = useState(null);
+
+  const jobTypes = ["Fresher", "Experienced", "Internship"];
+
+  const jobmodes = ["On-site", "Remote"];
+
+  const [selectedJobType, setSelectedJobType] = useState(null);
+
+  const [selectedJobmode, setSelectedJobmode] = useState(null);
 
   const badges = {
     Internship: "bg-blue-100 text-blue-800",
@@ -46,7 +58,7 @@ export default function Joblist() {
         .get("http://localhost:3000/job/viewjobs")
         .then((res) => setjobs(res.data));
     }
-  }, [userrole, id]);
+  }, [userrole, id, refresh]);
 
   const savejob = (jid) => {
     if (user) {
@@ -70,7 +82,8 @@ export default function Joblist() {
   };
 
   const searchjobs = () => {
-    if (query && query.length > 0) {
+    console.log(query.length);
+    if (query && query.length > 2) {
       axios
         .get(`http://localhost:3000/job/search?q=${query}`)
         .then((res) => {
@@ -82,42 +95,158 @@ export default function Joblist() {
     }
   };
 
+  const applyFilters = () => {
+    if (!selectedJobType && !selectedJobmode) return;
+
+    const filters = {};
+    if (selectedJobType) filters.job_type = selectedJobType;
+    if (selectedJobmode) filters.mode = selectedJobmode;
+
+    axios.post(`http://localhost:3000/job/filter`, filters).then((res) => {
+      setjobs(res.data);
+    });
+  };
+
+  const clearFilters = () => {
+    setSelectedJobType(null);
+    setSelectedJobmode(null);
+    setrefresh(1);
+  };
+
   return (
     <>
       <div className="max-w-full mx-18">
-        <div className="">
-        <div className="my-5 md:px-6 w-full flex justify-center md:justify-end items-center gap-1 md:gap-2">
-          <div>
-            {userrole == "r" && (
+        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-4 p-4 w-full bg-white shadow-md mt-8 rounded-lg">
+          <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+            <Menu as="div" className="relative inline-block">
+              <Menu.Button className="flex gap-2 items-center border border-gray-400 font-semibold text-gray-700 rounded-2xl px-3 py-1 hover:border-purple-600 cursor-pointer transition-all">
+                <p className="text-sm">{selectedJobType || "Job type"}</p>
+                <IoIosArrowDown className="text-lg" />
+              </Menu.Button>
+
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-150"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute z-20 mt-2 w-40 bg-white border border-gray-200 rounded-xl shadow-lg focus:outline-none">
+                  {jobTypes.map((type) => (
+                    <Menu.Item key={type}>
+                      {({ active }) => (
+                        <button
+                          type="button"
+                          onClick={() => setSelectedJobType(type)}
+                          className={`w-full px-4 py-2 text-sm text-left rounded-xl transition ${
+                            active
+                              ? "bg-purple-100 text-purple-700"
+                              : "text-gray-700"
+                          }`}
+                        >
+                          {type}
+                        </button>
+                      )}
+                    </Menu.Item>
+                  ))}
+                </Menu.Items>
+              </Transition>
+            </Menu>
+            <Menu as="div" className="relative inline-block">
+              <Menu.Button className="flex gap-2 items-center border border-gray-400 font-semibold text-gray-700 rounded-2xl px-3 py-1 hover:border-purple-600 cursor-pointer transition-all">
+                <p className="text-sm">{selectedJobmode || "Job mode"}</p>
+                <IoIosArrowDown className="text-lg" />
+              </Menu.Button>
+
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-150"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute z-20 mt-2 w-40 bg-white border border-gray-200 rounded-xl shadow-lg focus:outline-none">
+                  {jobmodes.map((type) => (
+                    <Menu.Item key={type}>
+                      {({ active }) => (
+                        <button
+                          type="button"
+                          onClick={() => setSelectedJobmode(type)}
+                          className={`w-full px-4 py-2 text-sm text-left rounded-xl transition ${
+                            active
+                              ? "bg-purple-100 text-purple-700"
+                              : "text-gray-700"
+                          }`}
+                        >
+                          {type}
+                        </button>
+                      )}
+                    </Menu.Item>
+                  ))}
+                </Menu.Items>
+              </Transition>
+            </Menu>
+
+            <input type="hidden" name="jobtype" value={selectedJobType || ""} />
+
+            <input type="hidden" name="jobmode" value={selectedJobmode || ""} />
+
+            <div className="flex items-center justify-center md:justify-start w-full md:w-0 gap-2 md:ml-2 md:border-l md:pl-4 border-gray-300">
+              <button
+                type="button"
+                onClick={applyFilters}
+                className="text-sm bg-purple-100 text-purple-700 px-3 py-1 rounded-2xl font-bold hover:bg-purple-700 hover:text-white transition-colors hover:cursor-pointer"
+              >
+                Apply
+              </button>
+              <button
+                onClick={clearFilters}
+                className="text-sm text-gray-400 hover:text-red-500 font-bold px-2 py-1 cursor-pointer"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+            {userrole === "r" && (
+              <>
               <Link
                 to="/newjobpost"
-                className="bg-purple-700 text-white hover:cursor-pointer hover:bg-white hover:text-purple-700 hover:border-2 hover:border-purple-700 py-2 px-3 font-semibold rounded-lg"
+                className="hidden lg:block whitespace-nowrap bg-purple-700 text-white border border-purple-700 py-1.5 px-4 font-semibold rounded-lg hover:bg-white hover:text-purple-700 transition-all text-md"
               >
                 Add Post
               </Link>
+              <Link
+                to="/newjobpost"
+                className="lg:hidden whitespace-nowrap bg-purple-700 text-white border border-purple-700 py-1.5 px-2 font-semibold rounded-lg hover:bg-white hover:text-purple-700 transition-all text-md"
+              >
+                <FaPlus size={20} />
+              </Link>
+              </>
             )}
-          </div>
-          <div className="flex items-center gap-1">
-            <input
-              type="text"
-              name="query"
-              placeholder="Search jobs here"
-              className="border-2 border-gray-500 py-1 px-3 md:pr-12 rounded-lg"
-              onChange={(e) => {
-                setquery(e.target.value);
-              }}
-            />
-            <FaSearch
-              size={24}
-              className="text-purple-700 cursor-pointer"
-              onClick={() => {
-                searchjobs();
-              }}
-            ></FaSearch>
+
+            <div className="relative flex items-center w-full md:w-64">
+              <input
+                type="text"
+                name="query"
+                placeholder="Search jobs..."
+                className="w-full border border-gray-400 py-1.5 pl-3 pr-10 rounded-lg focus:border-purple-700 outline-none text-md"
+                onChange={(e) => setquery(e.target.value)}
+              />
+              <FaSearch
+                className="absolute right-3 text-purple-700 cursor-pointer hover:scale-110 transition-transform"
+                onClick={searchjobs}
+                size={18}
+              />
+            </div>
           </div>
         </div>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 md:gap-4 gap-2">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 md:gap-4 gap-2 mt-2">
           {jobs && jobs.length > 0 ? (
             jobs.map((j) => (
               <div

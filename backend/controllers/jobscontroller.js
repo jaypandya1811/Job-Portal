@@ -94,3 +94,13 @@ exports.searchjob = async (req,res) => {
         return res.status(500).json({ error : err.message })
     }
 }; 
+
+exports.filterjobs = async (req,res) => {
+    try {
+        const data = req.body; 
+        const jobs = await model.find(data);
+        return res.status(200).json(jobs)
+    } catch (err) {
+        return res.status(500).json({ error : err.message })
+    }
+};

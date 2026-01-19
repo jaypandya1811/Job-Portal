@@ -44,14 +44,15 @@ export default function Savedjobs(){
   };
 
   const unsavejob = (jid) => {
-          axios.delete(`http://localhost:3000/job/unsavejob/${jid}`)
-          .then((res) => {
-            setjobs(data => data.filter(job => job.j_id._id !== jid));
-          })
-          .catch(err => {
-            toast.error(err.response.data.message);
-          });
-        };
+    axios
+      .delete(`http://localhost:3000/job/unsavejob/${jid}`)
+      .then((res) => {
+        setjobs((data) => data.filter((job) => job.j_id._id !== jid));
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
 
     return (
       <>
