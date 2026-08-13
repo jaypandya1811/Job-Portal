@@ -1,4 +1,4 @@
-Job Portal 
+Job Connect
 
 A full-stack Job Portal web application built using the MERN stack.
 It allows users to register, upload resumes, browse jobs, and apply for relevant positions users can see applications job wise see resumes of applicants.
